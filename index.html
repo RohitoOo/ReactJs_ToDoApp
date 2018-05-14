@@ -76,13 +76,13 @@ var ParentComponent = React.createClass({
       todos : [
         {
           id:1,
-          name: "Make App"
+          text: "Make App"
         },{
           id:2,
-          name: "Make Successfull Business"
+          text: "Make Successfull Business"
         },{
           id:3,
-          name: "Never Give UP"
+          text: "Never Give UP"
         }
       ]
     }
@@ -93,26 +93,64 @@ var ParentComponent = React.createClass({
   render: function(){
     return(
       <div>
-        <ToDoForm />
+        <ToDoForm
+          onToDoAdd={this.hangleTodoAdd}
+        />
         <ToDoList
           todos = {this.state.todos}
         />
       </div>
     )
+  },
+
+  hangleTodoAdd: function (text){
+    var newTodo = {
+      id: this.state.todos.length + 1,
+      text: text
+    }
+
+    this.setState({todos: this.state.todos.concat(newTodo)})
   }
+
 })
 
 var ToDoForm = React.createClass({
 
   render: function(){
     return(
-      <div>
-        To Do Form
-
+      <div onSubmit={this.submit}>
+        <form action="" className='form-group'>
+          <label> Todo List </label>
+          <input type="text" ref='text' onChange={this.change} className="form-control"/>
+        </form>
       </div>
     )
-  }
+  },
+
+change: function(){
+  console.log('Changing text')
+},
+
+submit: function(e){
+  e.preventDefault();
+  var text = this.refs.text.value.trim()
+
+if(!text){
+  alert("Really!! You got NOTHIN to do?")
+  return;
+}
+
+this.props.onToDoAdd(text);
+this.refs.text.value= '' ;
+
+
+}
+
 })
+
+
+
+
 
 var ToDoList = React.createClass({
 
@@ -122,7 +160,7 @@ var ToDoList = React.createClass({
         <ul className="list-group">
           {
             this.props.todos.map(todo => {
-              return <li className='list-item' todo={todo} key={todo.id}>{todo.name}</li>}
+              return <li className='list-item' todo={todo} key={todo.id}>{todo.text}</li>}
             )
           }
 
