@@ -91,6 +91,7 @@ var ParentComponent = React.createClass({
         />
         <ToDoList
           todos = {this.state.todos}
+          deleteToDo = {this.handleDeleteTodo}
         />
       </div>
     )
@@ -103,6 +104,23 @@ var ParentComponent = React.createClass({
     }
 
     this.setState({todos: this.state.todos.concat(newTodo)})
+  },
+
+  handleDeleteTodo: function(todo){
+
+    console.log('Handle Delete To do from Parent Component')
+
+    var todos = this.state.todos;
+
+    for(var i = 0 ; i < todos.length ; i++) {
+      if(todos[i].id == todo.id ) {
+
+        todos.splice(i, 1)
+      }
+    }
+
+    this.setState({todos : todos});
+
   }
 
 })
@@ -150,8 +168,8 @@ var ToDoList = React.createClass({
     return(
       <div className="jumbotron">
         <ul className="list-group">
-          {this.props.todos.map(function(todo){
-            return   <li className="list-group-item" todo={todo}  key={todo.id}> {todo.text} <button  className="btn btn-danger">X<  /button> </li>
+          {this.props.todos.map((todo)=>{
+            return   <li className="list-group-item" todo={todo} key={todo.id}> {todo.text} <button onClick={this.onDelete.bind(this, todo)} className="btn btn-danger">X<  /button> </li>
           })}
         </ul>
       </div>
@@ -159,7 +177,9 @@ var ToDoList = React.createClass({
   },
 
 onDelete : function (todo){
-  console.log('Testing Complete' + todo)
+
+  this.props.deleteToDo(todo);
+
 }
 
 })
