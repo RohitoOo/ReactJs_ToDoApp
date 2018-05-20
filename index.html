@@ -151,7 +151,7 @@ var ToDoList = React.createClass({
       <div className="jumbotron">
         <ul className="list-group">
           {this.props.todos.map(function(todo){
-            return   <li className="list-group-item" todo={todo}  key={todo.id}> {todo.text} <button onClick={this.todo.onDelete(todo)}  className="btn btn-danger">X</button> </li>
+            return   <li className="list-group-item" todo={todo}  key={todo.id}> {todo.text} <button  className="btn btn-danger">X<  /button> </li>
           })}
         </ul>
       </div>
