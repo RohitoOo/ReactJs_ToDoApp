@@ -15,56 +15,60 @@
         </div>
       </div>
   </div>
-
+<style>
+body{
+  font-size: 30px;
+}
+</style>
 <script type='text/babel'>
 
 
 
-var App = React.createClass({
-
-  getInitialState: function(){
-
-  return{
-    text: "Hello I am From the Initial State"
-  }
-
-  },
-  render: function(){
-    return(
-          <div>
-            <h1>{this.state.text}</h1>
-            <form>
-              <input type="text" onChange={this.changeValue} value={this.state.text} />
-            </form>
-            <button onClick={this.changeText} className="btn btn-primary"></button>
-            <br />
-            //Passing in text as a property
-            <ComponentTwo textAsaProperty={this.state.text}/>
-          </div>
-
-        )
-      },
-
-  changeText: function(){
-    this.setState({text: "This is my app state"})
-  },
-  changeValue: function(e){
-    this.setState({text: e.target.value})
-  }
-
-
-});
-
-var ComponentTwo = React.createClass({
-
-  render: function(){
-    return(
-      <div>
-        {this.props.textAsaProperty}
-      </div>
-    )
-  }
-})
+// var App = React.createClass({
+//
+//   getInitialState: function(){
+//
+//   return{
+//     text: "Hello I am From the Initial State"
+//   }
+//
+//   },
+//   render: function(){
+//     return(
+//           <div>
+//             <h1>{this.state.text}</h1>
+//             <form>
+//               <input type="text" onChange={this.changeValue} value={this.state.text} />
+//             </form>
+//             <button onClick={this.changeText} className="btn btn-primary"></button>
+//             <br />
+//             //Passing in text as a property
+//             <ComponentTwo textAsaProperty={this.state.text}/>
+//           </div>
+//
+//         )
+//       },
+//
+//   changeText: function(){
+//     this.setState({text: "This is my app state"})
+//   },
+//   changeValue: function(e){
+//     this.setState({text: e.target.value})
+//   }
+//
+//
+// });
+//
+// var ComponentTwo = React.createClass({
+//
+//   render: function(){
+//     return(
+//       <div>
+//         {this.props.textAsaProperty}
+//       </div>
+//     )
+//   }
+// })
 
 var ParentComponent = React.createClass({
 
@@ -73,18 +77,7 @@ var ParentComponent = React.createClass({
 
     return {
       text : '',
-      todos : [
-        {
-          id:1,
-          text: "Make App"
-        },{
-          id:2,
-          text: "Make Successfull Business"
-        },{
-          id:3,
-          text: "Never Give UP"
-        }
-      ]
+      todos : []
     }
   },
 
@@ -114,62 +107,62 @@ var ParentComponent = React.createClass({
 
 })
 
+
 var ToDoForm = React.createClass({
 
-  render: function(){
-    return(
+  render : function(){
+
+    return (
       <div onSubmit={this.submit}>
-        <form action="" className='form-group'>
-          <label> Todo List </label>
-          <input type="text" ref='text' onChange={this.change} className="form-control"/>
+        <form action="" className="form-group">
+
+        <label> Todo Or Not To Do </label>
+        <input type="text"  ref="text" onChange={this.change} className="form-control"/>
         </form>
       </div>
     )
   },
 
-change: function(){
-  console.log('Changing text')
-},
+   change : function(){
 
-submit: function(e){
-  e.preventDefault();
-  var text = this.refs.text.value.trim()
+    console.log('typing...')
+  },
 
-if(!text){
-  alert("Really!! You got NOTHIN to do?")
-  return;
-}
+  submit: function(e){
+    e.preventDefault();
+    var text = this.refs.text.value.trim()
 
-this.props.onToDoAdd(text);
-this.refs.text.value= '' ;
+    if(!text){
+      return alert("Reallllyy!!! Really!! You got NOTHIN To Do?")
+    }
 
-
-}
-
-})
+    this.props.onToDoAdd(text);
+    this.refs.text.value = ''
 
 
-
+  }
+});
 
 
 var ToDoList = React.createClass({
 
-  render: function(){
+  render : function(){
     return(
-     <div className="jumbotron">
+      <div className="jumbotron">
         <ul className="list-group">
-          {
-            this.props.todos.map(todo => {
-              return <li className='list-item' todo={todo} key={todo.id}>{todo.text}</li>}
-            )
-          }
-
+          {this.props.todos.map(function(todo){
+            return   <li className="list-group-item" todo={todo}  key={todo.id}> {todo.text} <button onClick={this.todo.onDelete(todo)}  className="btn btn-danger">X</button> </li>
+          })}
         </ul>
-    </div>
+      </div>
     )
-  }
-})
+  },
 
+onDelete : function (todo){
+  console.log('Testing Complete' + todo)
+}
+
+})
 
 
 ReactDOM.render(
