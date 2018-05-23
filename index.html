@@ -77,7 +77,8 @@ var ParentComponent = React.createClass({
 
     return {
       text : '',
-      todos : []
+      todos : [],
+      done : []
     }
   },
 
@@ -92,7 +93,10 @@ var ParentComponent = React.createClass({
         <ToDoList
           todos = {this.state.todos}
           deleteToDo = {this.handleDeleteTodo}
+          addCompleted = {this.handleCompleted}
         />
+
+        <DoneList done={this.state.done} /> 
       </div>
     )
   },
@@ -121,9 +125,67 @@ var ParentComponent = React.createClass({
 
     this.setState({todos : todos});
 
+  },
+
+
+handleCompleted : function(todo){
+
+  var completed = {
+    id: todo.length + 1,
+    text: todo.text
   }
 
+  this.setState({done: this.state.done.concat(completed)})
+
+  var todos = this.state.todos;
+
+  for(var i = 0 ; i < todos.length ; i++) {
+    if(todos[i].id == todo.id ) {
+
+      todos.splice(i, 1)
+    }
+  }
+
+
+
+
+  }
+
+
+
 })
+
+
+
+
+
+
+
+
+var DoneList = React.createClass({
+
+  render : function(){
+    return (
+      <div className="jumbotron">
+
+
+          Completed Tasks - Clap For Yourself <br/><br/>
+          {this.props.done.map((x)=>{
+            return  <li className="list-group-item"> {x.text}  </li>
+          })}
+      </div>
+    )
+  }
+})
+
+
+
+
+
+
+
+
+
 
 
 var ToDoForm = React.createClass({
@@ -167,9 +229,15 @@ var ToDoList = React.createClass({
   render : function(){
     return(
       <div className="jumbotron">
+      Pending Tasks...
+      <br/><br/>
         <ul className="list-group">
           {this.props.todos.map((todo)=>{
-            return   <li className="list-group-item" todo={todo} key={todo.id}> {todo.text} <button onClick={this.onDelete.bind(this, todo)} className="btn btn-danger">X<  /button> </li>
+            return   <li className="list-group-item" todo={todo} key={todo.id}> {todo.text}
+            <button onClick={this.onDelete.bind(this, todo)}
+            className="btn btn-danger">X<  /button>
+            <button className="btn btn-primary"  onClick={this.OnComplete.bind(this, todo)}>Done</button>
+            </li>
           })}
         </ul>
       </div>
@@ -180,10 +248,13 @@ onDelete : function (todo){
 
   this.props.deleteToDo(todo);
 
+},
+
+OnComplete : function(todo){
+this.props.addCompleted(todo)
 }
 
 })
-
 
 ReactDOM.render(
   <ParentComponent />,
