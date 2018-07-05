@@ -1,5 +1,5 @@
 # ReactJs_ToDoApp
 
-![Screenshot](screen_shot.png)
-![Screenshot](image.png)
+![Image](screen_shot.png)
+![Image](image.png)
 
