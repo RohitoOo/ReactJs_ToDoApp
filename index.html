@@ -22,57 +22,7 @@ body{
 </style>
 <script type='text/babel'>
 
-
-
-// var App = React.createClass({
-//
-//   getInitialState: function(){
-//
-//   return{
-//     text: "Hello I am From the Initial State"
-//   }
-//
-//   },
-//   render: function(){
-//     return(
-//           <div>
-//             <h1>{this.state.text}</h1>
-//             <form>
-//               <input type="text" onChange={this.changeValue} value={this.state.text} />
-//             </form>
-//             <button onClick={this.changeText} className="btn btn-primary"></button>
-//             <br />
-//             //Passing in text as a property
-//             <ComponentTwo textAsaProperty={this.state.text}/>
-//           </div>
-//
-//         )
-//       },
-//
-//   changeText: function(){
-//     this.setState({text: "This is my app state"})
-//   },
-//   changeValue: function(e){
-//     this.setState({text: e.target.value})
-//   }
-//
-//
-// });
-//
-// var ComponentTwo = React.createClass({
-//
-//   render: function(){
-//     return(
-//       <div>
-//         {this.props.textAsaProperty}
-//       </div>
-//     )
-//   }
-// })
-
 var ParentComponent = React.createClass({
-
-
   getInitialState: function(){
 
     return {
@@ -81,8 +31,6 @@ var ParentComponent = React.createClass({
       done : []
     }
   },
-
-
 
   render: function(){
     return(
@@ -149,12 +97,6 @@ handleCompleted : function(todo){
 })
 
 
-
-
-
-
-
-
 var DoneList = React.createClass({
 
   render : function(){
@@ -170,15 +112,6 @@ var DoneList = React.createClass({
     )
   }
 })
-
-
-
-
-
-
-
-
-
 
 
 var ToDoForm = React.createClass({
@@ -217,7 +150,12 @@ var ToDoForm = React.createClass({
 });
 
 
+
+
+
 var ToDoList = React.createClass({
+
+
 
   render : function(){
     return(
@@ -227,8 +165,8 @@ var ToDoList = React.createClass({
         <ul className="list-group">
           {this.props.todos.map((todo)=>{
             return   <li className="list-group-item" todo={todo} key={todo.id}> {todo.text}
-            <button onClick={this.onDelete.bind(this, todo)}
-            className="btn btn-danger">X<  /button>
+            <button  onClick={this.onDelete.bind(this, todo)}
+            className="btn btn-danger margin" >X </button>
             <button className="btn btn-primary"  onClick={this.OnComplete.bind(this, todo)}>Done</button>
             </li>
           })}
@@ -255,6 +193,12 @@ ReactDOM.render(
 )
 
 </script>
+
+<style>
+.btn {
+  margin: 1em
+}
+</style>
 
 </body>
 </html>
