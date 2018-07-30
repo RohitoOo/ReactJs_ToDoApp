@@ -155,8 +155,6 @@ var ToDoForm = React.createClass({
 
 var ToDoList = React.createClass({
 
-
-
   render : function(){
     return(
       <div className="jumbotron">
@@ -164,9 +162,10 @@ var ToDoList = React.createClass({
       <br/><br/>
         <ul className="list-group">
           {this.props.todos.map((todo)=>{
-            return   <li className="list-group-item" todo={todo} key={todo.id}> {todo.text}
+            return   <li className="list-group-item" todo={todo} key={todo.id}>
             <button  onClick={this.onDelete.bind(this, todo)}
             className="btn btn-danger margin" >X </button>
+              {todo.text}
             <button className="btn btn-primary"  onClick={this.OnComplete.bind(this, todo)}>Done</button>
             </li>
           })}
